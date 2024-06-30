@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { SearchInput } from '../molecules/SerchInput';
 import { UserCard } from '../organisms/user/UserCard';
+import { SecondaryButton } from '../atoms/button/SecondaryButton';
+import { useContext } from 'react';
+import { UserContext } from '../../providers/UserProvider';
 
 const users = [...Array(10).keys()].map((value) => {
   return {
@@ -18,10 +21,15 @@ const users = [...Array(10).keys()].map((value) => {
 });
 
 export const Users = () => {
+  const {userInfo,setUserInfo} = useContext(UserContext);
+  const onClickSwitch= ()=>{
+    setUserInfo({isAdmin: !userInfo.isAdmin})
+  }
   return (
     <Scontainer>
       <h2>Usersページです</h2>
       <SearchInput />
+      <SecondaryButton onClick={onClickSwitch}>切り替え</SecondaryButton>
       <SUserArea>
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
